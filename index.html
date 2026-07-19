@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Prompt | Profesyonel Prompt Kütüphanesi</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; }
+        
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { text-align: center; padding: 40px 0; }
+        header h1 { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+        header p { color: var(--secondary); max-width: 600px; margin: 0 auto; }
+
+        .controls { display: flex; gap: 10px; margin-bottom: 30px; }
+        #searchBar { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        
+        .badge { background: #dbeafe; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        h3 { margin: 15px 0; }
+        .prompt-box { background: #1e293b; color: #f1f5f9; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; margin: 15px 0; min-height: 80px; overflow-x: auto; }
+        
+        .btn-copy { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: 600; }
+        .btn-copy:hover { background: #1d4ed8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Best Prompt</h1>
+        <p>Yapay zeka deneyiminizi optimize eden, en güncel ve profesyonel prompt kütüphanesi. İhtiyacınız olanı bulun, kopyalayın ve sonuç alın.</p>
+    </header>
+
+    <div class="controls">
+        <input type="text" id="searchBar" placeholder="Prompt ara (Örn: SEO, Python, Blog)...">
+    </div>
+
+    <div class="grid" id="promptGrid"></div>
+</div>
+
+<script>
+    const prompts = [
+        { title: "SEO Uyumlu İçerik", category: "SEO", text: "Verilen anahtar kelimeler ile Google'da ilk sayfaya çıkacak, okuyucu dostu bir blog yazısı taslağı oluştur." },
+        { title: "Python Refactoring", category: "Yazılım", text: "Bu Python kodunu daha temiz, performanslı ve okunabilir (Clean Code) prensiplerine uygun hale getir: [KODUNUZ]." },
+        { title: "E-Ticaret Ürün Açıklaması", category: "Pazarlama", text: "Satışı artıracak, ikna edici ve duygulara hitap eden bir ürün açıklama metni yaz." },
+        { title: "YouTube Video Senaryosu", category: "İçerik", text: "İzleyicinin dikkatini ilk 10 saniyede çeken, akıcı bir video giriş metni ve akışı hazırla." },
+        { title: "E-posta Pazarlama", category: "İş", text: "Profesyonel ama samimi, tıklama oranı yüksek bir tanıtım e-postası hazırla." },
+        { title: "Kod Hata Ayıklama", category: "Yazılım", text: "Aşağıdaki kodda oluşan hatayı bul, nedenini açıkla ve çözüm kodunu sun: [KODUNUZ]." }
+    ];
+
+    function renderPrompts(filter = "") {
+        const grid = document.getElementById('promptGrid');
+        grid.innerHTML = "";
+        
+        const filtered = prompts.filter(p => 
+            p.title.toLowerCase().includes(filter.toLowerCase()) || 
+            p.category.toLowerCase().includes(filter.toLowerCase())
+        );
+
+        filtered.forEach(p => {
+            grid.innerHTML += `
+                <div class="card">
+                    <span class="badge">${p.category}</span>
+                    <h3>${p.title}</h3>
+                    <div class="prompt-box">${p.text}</div>
+                    <button class="btn-copy" onclick="copyText(this, '${p.text.replace(/'/g, "\\'")}')">Kopyala</button>
+                </div>
+            `;
+        });
+    }
+
+    document.getElementById('searchBar').addEventListener('input', (e) => renderPrompts(e.target.value));
+
+    function copyText(btn, text) {
+        navigator.clipboard.writeText(text);
+        const originalText = btn.innerText;
+        btn.innerText = "Kopyalandı!";
+        setTimeout(() => btn.innerText = originalText, 2000);
+    }
+
+    renderPrompts(); // İlk açılışta yükle
+</script>
+
+</body>
+</html>
