@@ -1,6 +1,0 @@
-{
-  "name": "Best Prompts",
-  "description": "An elegant, high-quality sharing directory and administrative dashboard for technical and AI developer prompts.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
